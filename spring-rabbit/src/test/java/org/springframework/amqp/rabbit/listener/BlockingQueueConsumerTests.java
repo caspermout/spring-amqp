@@ -140,7 +140,8 @@ public class BlockingQueueConsumerTests {
 		blockingQueueConsumer.setFailedDeclarationRetryInterval(10);
 		blockingQueueConsumer.start();
 
-		verify(channel).basicQos(20);
+		// Global true for http://www.rabbitmq.com/consumer-prefetch.html
+		verify(channel).basicQos(20, true);
 	}
 
 	private void testRequeueOrNotDefaultYes(Exception ex, boolean expectedRequeue) throws Exception {

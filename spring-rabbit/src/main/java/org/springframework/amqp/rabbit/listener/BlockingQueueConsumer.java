@@ -506,7 +506,8 @@ public class BlockingQueueConsumer {
 			// Set basicQos before calling basicConsume (otherwise if we are not acking the broker
 			// will send blocks of 100 messages)
 			try {
-				channel.basicQos(prefetchCount);
+				// Global true for http://www.rabbitmq.com/consumer-prefetch.html
+				channel.basicQos(prefetchCount, true);
 			}
 			catch (IOException e) {
 				this.activeObjectCounter.release(this);
